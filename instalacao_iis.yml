@@ -1,0 +1,13 @@
+---
+- name: Instalar IIS no Windows Server
+  hosts: windows
+  tasks:
+    - name: Instalar o IIS
+      win_feature:
+        name: Web-Server
+        state: present
+      register: iis_instalado
+
+    - name: Reiniciar o servidor (se necessário)
+      win_reboot:
+      when: iis_instalado.reboot_required
